@@ -1,0 +1,216 @@
+*indent-bar.txt*        Show vertical lines for indent with conceal feature
+
+CONTENTS                                        *indent-bar-contents*
+Introduction                                    |indent-bar-introduction|
+Config                                          |indent-bar-config|
+Variables                                       |indent-bar-variables|
+Commands                                        |indent-bar-commands|
+FAQ                                             |indent-bar-faq|
+Changelog                                       |indent-bar-changelog|
+Credits                                         |indent-bar-credits|
+==============================================================================
+INTRODUCTION                                    *indent-bar-introduction*
+This plugin displays thin vertical lines at each indentation level for
+code indented with spaces.
+==============================================================================
+CONFIG                                          *indent-bar-config*
+
+==============================================================================
+VARIABLES                                       *indent-bar-variables*
+
+g:indent_bar_char                               *g:indent_bar_char*
+                Specify a character to be used as indent line if
+                |g:indent_bar_char_list| is not [].
+                You also can use other characters:
+                  | ¦ ┆ │
+                Default value is "|".
+
+g:indent_bar_char_list                          *g:indent_bar_char_list*
+                Specify a list of characters to be used as indent line for
+                each indent level. If the value is an empty list [], use
+                |g:indent_bar_char| instead.
+                e.g., let g:indent_bar_char_list = ['|', '¦', '┆', '┊']
+                Default value is [].
+
+g:indent_bar_set_colors                          *g:indent_bar_set_colors*
+                By default, indent-bar will overwrite 'conceal' color.
+                If you want to highlight conceal with your
+                colorscheme, set this value to 0.
+                Default value is 1.
+
+g:indent_bar_first_char                         *g:indent_bar_first_char*
+                Specify a character to be used as indent line
+                on the first level.
+                You also can use other characters:
+                  | ¦ ┆ │
+                Default value is "|".
+
+g:indent_bar_color_term                         *g:indent_bar_color_term*
+                Specify terminal vim indent line color.
+                e.g.  let g:indent_bar_color_term = 239
+
+g:indent_bar_bgcolor_term                       *g:indent_bar_bgcolor_term*
+                Specify terminal vim indent line background color.
+                e.g.  let g:indent_bar_bgcolor_term = 202
+
+
+g:indent_bar_color_gui                          *g:indent_bar_color_gui*
+                Specify GUI vim indent line color.
+                e.g.  let g:indent_bar_color_gui = '#A4E57E'
+
+g:indent_bar_bgcolor_gui                        *g:indent_bar_bgcolor_gui*
+                Specify GUI vim indent line background color.
+                e.g.  let g:indent_bar_color_gui = '#FF5F00'
+
+g:indent_bar_color_tty_light                    *g:indent_bar_color_tty_light*
+                Specify none X terminal vim indent line color in bg light.
+                default: 4
+                e.g.  let g:indent_bar_color_tty_light = 7
+
+g:indent_bar_color_tty_dark                     *g:indent_bar_color_tty_dark*
+                Specify none X terminal vim indent line color in bg dark.
+                default: 2
+                e.g.  let g:indent_bar_color_tty_dark = 1
+
+g:indent_bar_indent_level                        *g:indent_bar_indent_level*
+                Specify how much indent level do you want to use for
+                indent-bar. Most program will not has bigger indent level than
+                10.
+                Default value is 10.
+
+g:indent_bar_show_first_indent_level               *g:indent_bar_show_first_indent_level*
+                Specify whether the first indent level should be shown.
+                This is useful if you use indent-bar in combination with
+                |listchars| in order to show tabs.
+                Default value is 0.
+
+g:indent_bar_enabled                            *g:indent_bar_enabled*
+                Specify whether to enable indent-bar plugin by default.
+                If value is not 0, the plugin is on by default, otherwise off.
+                Default value is 1.
+
+g:indent_bar_filetype                           *g:indent_bar_filetype*
+                This variable specify a list of file types.
+                When opening these types of files, the plugin is enabled by
+                default.
+                e.g. let g:indent_bar_filetype = ['c', 'cpp']
+                Default value is [] which means all file types is supported.
+
+g:indent_bar_filetype_exclude                    *g:indent_bar_filetype_exclude*
+                This variable specify a list of file types.
+                When opening these types of files, the plugin is disabled by
+                default.
+                e.g. let g:indent_bar_filetype_exclude = ['text', 'sh']
+                Default value is [] which means no file types are excluded.
+
+g:indent_bar_buftype_exclude                     *g:indent_bar_buftype_exclude*
+                This variable specify a list of buffer types.
+                When opening these types of buffers, the plugin is disabled
+                by default.
+                e.g. let g:indent_bar_buftype_exclude = ['help', 'terminal']
+                Default value is [] which means no buffer type is excluded.
+
+g:indent_bar_bufname_exclude                     *g:indent_bar_bufname_exclude*
+                This variable specify a list of buffer names, which can be
+                regular expression. If the buffer's name fall into this list,
+                the indent-bar won't display.
+                e.g. let g:indent_bar_bufname_exclude = ['_.*', 'NERD_tree.*']
+                Default value is [].
+
+g:indent_bar_max_lines                           *g:indent_bar_max_lines*
+                This variable specify a number, when the number of buffer's
+                lines exceed it, the plugin try to use another pattern to make
+                the performance better.
+                Default value is 3000.
+
+g:indent_bar_faster                             *g:indent_bar_faster*
+                If you want the performance better, you can set the value as
+                1, default value is 0. But better performance may bring little
+                issue with it.
+
+g:indent_bar_set_conceal
+                The plugin will overwrite your "concealcursor" and
+                "conceallevel" by default. If you want to keep your setting,
+                set this value to 0.
+                Default value is 1.
+
+g:indent_bar_concealcursor                      *g:indent_bar_concealcursor*
+                This variable toggles cursor lines behavior. If variable
+                exists and is empty, that is, set to '', then the IndentBar
+                will not show up in the cursorline.
+                See *concealcursor*.
+                Default value is 'inc'.
+
+g:indent_bar_conceallevel                       *g:indent_bar_conceallevel*
+                This variable toggles the concealing behavior.
+                See *conceallevel*.
+                Default value is '2'.
+
+g:indent_bar_leading_space_char                   *g:indent_bar_leading_space_char*
+                Specify a character to show for leading spaces.
+                You also can use other characters:˽˰··
+                e.g. let g:indent_bar_leading_space_char = '·'
+
+g:indent_bar_leading_space_enabled                *g:indent_bar_leading_space_enabled*
+                Specify whether to show leading spaces by default.
+                Default value is 0.
+
+g:indent_bar_defaultgroup                       *g:indent_bar_defaultgroup*
+                Specify a highlight group to use for default values
+                of g:indent_bar_[bg]color_(term|gui)
+
+g:indent_bar_auto_reset_width                     *g:indent_bar_auto_reset_width*
+                Specify whether to auto redraw the indent-bar after
+                'shiftwidth' or 'tabstop' change.
+                Default value is 1.
+
+==============================================================================
+COMMANDS                                         *indent-bar-commands*
+
+*IndentBarReset* [number]
+                if 'shiftwidth' changes, using this command can redraw the
+                IndentBar. number is optional, it means the width between
+                two indent level, if ommited, value of 'shiftwidth' is used.
+
+*IndentBarToggle*
+                toggle the indent lines of the current buffer.
+
+*IndentBarEnable*
+                enable the indent lines of the current buffer.
+
+*IndentBarDisable*
+                disable the indent lines of the current buffer.
+
+*LeadingSpaceEnable*
+                enable the leading spaces of the current buffer.
+
+*LeadingSpaceDisable*
+                disable the leading spaces of the current buffer.
+
+*LeadingSpaceToggle*
+                toggle the leading spaces of the current buffer.
+==============================================================================
+FAQ                                              *indent-bar-faq*
+
+Q. How can I make the indent line visual similar to the line used in Sublime
+    Text 2?
+
+A. Use let g:indent_bar_char = '┊'
+
+Q. I don't see quotes in JSON.
+
+A. Use let g:vim_json_syntax_conceal = 0 or run :IndentBarDisable
+
+==============================================================================
+CHANGELOG                                        *indent-bar-changelog*
+
+==============================================================================
+CREDITS                                          *indent-bar-credits*
+
+Thanks to the following people for suggestions and patches:
+
+NagatoPain
+Salman Halim
+Christophe
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl
